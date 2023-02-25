@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "hardhat/console.sol";
 
 contract NFTMarketplace is ERC721URIStorage{
-    using Counters for Counters.counter;
+    using Counters for Counters.Counter;
 
-    
+
 }
 
 
