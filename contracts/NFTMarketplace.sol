@@ -20,6 +20,7 @@ contract NFTMarketplace is ERC721URIStorage{
         uint256 tokenId;
         address payable seller;
         address payable owner;
+        uint256 price;
         bool sold; // 
     }
 
@@ -58,10 +59,63 @@ contract NFTMarketplace is ERC721URIStorage{
         return newTokenId;
     }
     // creating market items
-    function createMarketItem(uint256 tokenID, uint256 price) private {
+    function createMarketItem(uint256 tokenId, uint256 price) private {
         require(price>0,"price must be atleast 1");
         require(msg.value== listingPrice, "price must be equal to listing price");
+
+        idMarketItem[tokenId] = MarketItem(
+            tokenId,
+            payable(msg.sender),
+            payable(address(this)),
+            price,
+            false
+        );
+
+        _transfer(msg.sender, address(this), tokenId); 
+
+        emit idMarketItemCreated(tokenId, msg.sender, address(this), price, false);
+
+        
+
+        
     }
+ //function for resale token
+
+        
+
+    function reSellToken (uint256 tokenId, uint256 price) public payable {
+            require(idMarketItem[tokenId].owner==msg.sender,"only item owner can perform this purchase");
+
+            require(msg.value==listingPrice,"Price must be equal to listing price");
+
+            idMarketItem[tokenId].sold= false;
+            idMarketItem[tokenId].price =price;
+
+            idMarketItem[tokenId].seller= payable(msg.sender);
+
+            idMarketItem[tokenId].owner=payable(address(this));
+
+            _itemsSold.decrement();
+
+            _transfer(msg.sender, address(this), tokenId); 
+    }
+
+    //function create market sale
+
+    function createMarketSale(uint256 tokenId) public payable{
+        uint256 price = idMarketItem[tokenId].price;
+
+        require(msg.value==price, " please submit the asking price in order to complete the purchase");
+
+            idMarketItem[tokenId].sold= true;
+
+            idMarketItem[tokenId].seller= payable(msg.sender);
+
+            idMarketItem[tokenId].owner=payable(address(0));
+
+            _itemsSold.increment();
+    }
+
 }
 
 
