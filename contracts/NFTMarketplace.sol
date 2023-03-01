@@ -21,7 +21,7 @@ contract NFTMarketplace is ERC721URIStorage{
         address payable seller;
         address payable owner;
         uint256 price;
-        bool sold; // 
+        bool sold; // sold will be true or false
     }
 
     event idMarketItemCreated (
@@ -29,7 +29,7 @@ contract NFTMarketplace is ERC721URIStorage{
         address seller,
         address owner,
         uint256 price,
-        bool sold // 
+        bool sold // sold will be true or false
     );
     modifier onlyOwner()
     { require(msg.sender==owner,"only owner of the contract can change the listing price");
