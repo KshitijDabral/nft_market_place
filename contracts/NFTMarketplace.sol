@@ -25,7 +25,7 @@ contract NFTMarketplace is ERC721URIStorage{
     }
 
     event idMarketItemCreated (
-        uint256 indexed tokenId,
+        uint256 indexed tokenId, // In Solidity, you'll see that events are defined using the “event” keyword and are emitted using the “emit” keyword. Placing the “indexed” keyword in front of a parameter name will store it as a topic in the log record. Without the keyword “indexed”, it will be stored as data.
         address seller,
         address owner,
         uint256 price,
