@@ -47,7 +47,7 @@ contract NFTMarketplace is ERC721URIStorage{
     }
 // let create "Create nft oken function"
 
-    function creatToken(string memory tokenURI, uint256 price) public payable returns(uint256){ //check functions spelling
+    function createToken(string memory tokenURI, uint256 price) public payable returns(uint256){ //check functions spelling
         _tokenIds.increment();
 
         uint256 newTokenId = _tokenIds.current();
